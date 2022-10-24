@@ -1,11 +1,15 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Delete Blog</title>
 </head>
 <body>
-<a href="/blogs">Back</a>
-<h1>View detail</h1>
+<h1>Delete Blog</h1>
+<h2>Are you sure?</h2>
+<p>
+    <a href="/blogs">Blog list</a>
+</p>
 <form th:action="@{/delete-blog}" th:object="${blog}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>

@@ -1,10 +1,6 @@
 package com.codegym.blog.configuration;
 
-
-import com.codegym.blog.service.blog.BlogService;
-import com.codegym.blog.service.blog.IBlogService;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -12,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -32,11 +29,13 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories("com.codegym.blog.respository")
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan("com.codegym.blog.controller")
+@EnableJpaRepositories("com.codegym.blog.repository")
+@ComponentScan("com.codegym.blog")
+@EnableSpringDataWebSupport
 public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAware {
+
     private ApplicationContext applicationContext;
 
     @Override
@@ -82,7 +81,7 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("com.codegym.cms.model");
+        em.setPackagesToScan("com.codegym.blog.model");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -112,15 +111,5 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
-    }
-
-//    @Bean
-//    public ICustomerRepository customerRepository() {
-//        return new CustomerRepository();
-//    }
-
-    @Bean
-    public IBlogService customerService() {
-        return new BlogService();
     }
 }

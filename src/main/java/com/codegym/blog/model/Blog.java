@@ -3,14 +3,14 @@ package com.codegym.blog.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "blog")
+@Table(name = "blogs")
 public class Blog {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-    @Column(name= "name")
+
     private String name;
-    @Column(name = "detail")
+
     private String detail;
 
     public Blog(Long id, String name, String detail) {
